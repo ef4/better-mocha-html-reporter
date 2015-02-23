@@ -1,0 +1,61 @@
+#ember-testing-container {
+  position: fixed;
+  background: white;
+  bottom: 0;
+  right: -620px;
+  width: 640px;
+  height: 384px;
+  overflow: auto;
+  z-index: 9999;
+  border: 1px solid #ccc;
+  transition: right 500ms;
+}
+#ember-testing-container:hover {
+  right: 0;
+}
+#ember-testing {
+  zoom: 50%;
+  height: 100%;
+}
+
+#mocha h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 0.75em;
+}
+#mocha h2 {
+  margin: 0;
+  padding: 0;
+}
+#mocha-stats input {
+  display: inline-block;
+}
+#mocha-report.fail .suite.pass {
+  display: none;
+}
+
+#mocha .test a.replay {
+  display: inline-block;
+  position: static;
+  margin-left: 0.5em;
+
+}
+
+#mocha-stats {
+  border-radius: 5px;
+  transition: background-color 1s;
+}
+
+#mocha-stats.sad {
+  background-color: #FFC8DF;
+}
+
+#mocha-stats.happy {
+  background-color: #C0FFC1;
+}
+
+#mocha .suite .dump {
+  color: black;
+  text-decoration: underline;
+  cursor: pointer;
+}

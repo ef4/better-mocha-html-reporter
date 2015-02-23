@@ -7,3 +7,5 @@ import Reporter from './helpers/reporter';
 mocha.reporter(Reporter);
 ````
 
+You may also want the accompanying stylesheet, which tweaks the
+default one that ships with ember mocha.
