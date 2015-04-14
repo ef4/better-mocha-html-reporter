@@ -1,5 +1,4 @@
-import Ember from 'ember';
-var $ = Ember.$;
+/* global jQuery */
 
 // Grab our own Date reference in case Sinon alters it later.
 var _Date = Date;
@@ -14,14 +13,14 @@ export default class Reporter {
   }
 
   setupDOM() {
-    var root = $('#mocha');
+    var root = jQuery('#mocha');
     if (!root) {
       alert("#mocha div missing, add it to your document");
       return;
     }
     root.append(template);
-    this.stats = $('#mocha-stats');
-    this.stack = [$('#mocha-report')];
+    this.stats = jQuery('#mocha-stats');
+    this.stack = [jQuery('#mocha-report')];
 
     this.stats.find('input')
       .attr('checked', /hide_passed/.test(window.location.hash))
@@ -36,7 +35,7 @@ export default class Reporter {
         return m[1].toUpperCase();
       });
     }
-    Ember.A([
+    ([
       'start',
       'suite',
       'suite end',
@@ -45,7 +44,6 @@ export default class Reporter {
       'fail',
       'end'
     ]).forEach((event) => {
-      var args; // this is here to humor jshint
       runner.on(event, (...args) => this[handlerForEvent(event)](...args));
     });
   }
@@ -56,7 +54,7 @@ export default class Reporter {
 
   onSuite(suite) {
     if (suite.root) { return; }
-    var fragment = $('<li class="suite"><h1><a></a></h1><ul></ul></li>');
+    var fragment = jQuery('<li class="suite"><h1><a></a></h1><ul></ul></li>');
     fragment.find('a').text(suite.title).attr('href', grepURL(suite.fullTitle()));
     this.stack[0].append(fragment);
     this.stack.unshift(fragment.find('ul'));
@@ -91,7 +89,7 @@ export default class Reporter {
   onTestEnd(test) {
     this.updateDuration();
 
-    var frag = $('<li class="test"><h2></h2></li>');
+    var frag = jQuery('<li class="test"><h2></h2></li>');
     frag.find('h2').text(test.title);
 
     frag.addClass(speedOf(test));
@@ -117,7 +115,7 @@ export default class Reporter {
       var h2 = frag.find('h2');
       h2.append('<a class="replay">‣</a>');
       h2.find('.replay').attr('href', grepURL(test.fullTitle()));
-      var code = $('<pre style="display:none"><code></code></pre>');
+      var code = jQuery('<pre style="display:none"><code></code></pre>');
       code.find('code').text(clean(test.fn.toString()));
       frag.append(code);
       h2.on('click', function() {
@@ -126,7 +124,7 @@ export default class Reporter {
     }
 
     if (!this.stack[0]) {
-      var rep = $('#mocha-report');
+      var rep = jQuery('#mocha-report');
       rep.append('<li class="suite"><h1>ORPHAN TESTS</h1><ul></ul></li>');
       this.stack.unshift(rep.find('ul'));
     }
@@ -146,10 +144,10 @@ export default class Reporter {
 
   updateHidePassed() {
     if (this.stats.find('input').is(':checked')) {
-      $('#mocha-report').addClass('fail');
+      jQuery('#mocha-report').addClass('fail');
       window.location.hash='#hide_passed';
     } else {
-      $('#mocha-report').removeClass('fail');
+      jQuery('#mocha-report').removeClass('fail');
       window.location.hash='#';
     }
   }
