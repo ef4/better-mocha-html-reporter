@@ -10,6 +10,7 @@ export default class Reporter {
     this.failures = 0;
     this.setupDOM();
     this.setupEvents(runner);
+    this.runner = runner;
   }
 
   setupDOM() {
@@ -82,7 +83,11 @@ export default class Reporter {
       .find('.failures em').text(this.failures);
     test.err = err;
     if (test.type === 'hook') {
-      this.onTestEnd(test);
+      // This is a bizarre misfeature in mocha, but apparently without
+      // the reporter feeding this back, you will never hear these
+      // hook failures. Things like the testem mocha adapter assume
+      // this behavior.
+      this.runner.emit('test end', test);
     }
   }
 
